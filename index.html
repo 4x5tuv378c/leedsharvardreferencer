@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leeds Harvard Referencer</title>
+  <style>
+    .field-group { display: none; margin-bottom: 8px; }
+    label { font-weight: bold; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Leeds Harvard Referencer</h1>
+
+  <label for="format">Format:</label>
+  <select id="format" onchange="showFieldsForFormat(this.value)">
+    <option value="">-- Select Format --</option>
+    <option value="journal">Journal Article</option>
+    <option value="book">Book</option>
+    <option value="ebook">E-Book</option>
+    <option value="bookchapter">Book Chapter</option>
+    <option value="thesis">Thesis</option>
+    <option value="website">Website</option>
+    <option value="report">Report</option>
+    <option value="pressrelease">Press Release</option>
+    <option value="newspaper">Newspaper</option>
+    <option value="senate-report-us">Senate Report (US)</option>
+    <option value="bill">Parliamentary Bill</option>
+    <option value="act">Act of Parliament</option>
+  </select><br/><br/>
+
+  <div id="fields">
+    <div class="field-group" id="authorRow"><label for="author">Author:</label><input type="text" id="author" /></div>
+    <div class="field-group" id="titleRow"><label for="title">Title:</label><input type="text" id="title" /></div>
+    <div class="field-group" id="yearRow"><label for="year">Year:</label><input type="text" id="year" /></div>
+    <div class="field-group" id="journalRow"><label for="journal">Journal Name:</label><input type="text" id="journal" /></div>
+    <div class="field-group" id="volumeRow"><label for="volume">Volume:</label><input type="text" id="volume" /></div>
+    <div class="field-group" id="issueRow"><label for="issue">Issue:</label><input type="text" id="issue" /></div>
+    <div class="field-group" id="pagesRow"><label for="pages">Pages:</label><input type="text" id="pages" /></div>
+    <div class="field-group" id="urlRow"><label for="url">URL or DOI:</label><input type="text" id="url" /></div>
+    <div class="field-group" id="publisherRow"><label for="publisher">Publisher:</label><input type="text" id="publisher" /></div>
+    <div class="field-group" id="placeRow"><label for="place">Place of Publication:</label><input type="text" id="place" /></div>
+    <div class="field-group" id="editorsRow"><label for="editors">Editor(s):</label><input type="text" id="editors" /></div>
+    <div class="field-group" id="bookTitleRow"><label for="bookTitle">Book Title (for chapters):</label><input type="text" id="bookTitle" /></div>
+  </div>
+
+  <button onclick="generateReference()">Generate Reference</button><br/><br/>
+  <pre id="finalOutput"></pre>
+  <textarea id="debugOutput" rows="10" cols="70"></textarea>
+
+  <script>
+    const FORMAT_FIELDS = {
+      journal: ["author", "title", "year", "journal", "volume", "issue", "pages", "url"],
+      book: ["author", "title", "year", "place", "publisher"],
+      ebook: ["author", "title", "year", "place", "publisher", "url"],
+      bookchapter: ["author", "title", "year", "editors", "bookTitle", "place", "publisher", "pages"],
+      thesis: ["author", "title", "year", "publisher", "place"],
+      website: ["author", "title", "year", "url"],
+      report: ["author", "title", "year", "publisher", "place"],
+      pressrelease: ["author", "title", "year", "url"],
+      newspaper: ["author", "title", "year", "journal", "pages", "url"],
+      "senate-report-us": ["author", "title", "year", "publisher", "place"],
+      bill: ["title", "year", "publisher", "place", "url"],
+      act: ["title", "year", "publisher", "place", "url"]
+    };
+
+    function showFieldsForFormat(format) {
+      const fields = document.querySelectorAll(".field-group");
+      fields.forEach(f => f.style.display = "none");
+      if (!format || !FORMAT_FIELDS[format]) return;
+      FORMAT_FIELDS[format].forEach(f => {
+        const row = document.getElementById(f + "Row");
+        if (row) row.style.display = "block";
+      });
+    }
+  </script>
+
+  <script src="referenceEngine.js"></script>
+</body>
+</html>
