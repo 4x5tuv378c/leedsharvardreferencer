@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Leeds Harvard Reference Generator</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    label { display: block; margin-top: 1em; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 0.5em; margin-top: 0.25em; }
+    #finalOutput { margin-top: 2em; background: #f0f0f0; padding: 1em; border-radius: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h2>Leeds Harvard Reference Generator</h2>
+  <label for="format">Format:</label>
+  <select id="format" onchange="updateFieldVisibility()">
+    <option value="journal">Journal Article</option>
+    <option value="book">Book</option>
+    <option value="ebook">E-Book</option>
+    <option value="bookchapter">Book Chapter</option>
+    <option value="thesis">Thesis</option>
+    <option value="website">Website</option>
+    <option value="report">Report</option>
+    <option value="pressrelease">Press Release</option>
+    <option value="newspaper">Newspaper</option>
+    <option value="senate-report-us">Senate Report (US)</option>
+    <option value="bill">Parliamentary Bill</option>
+    <option value="act">Act of Parliament</option>
+  </select>
+
+  <div id="inputFields"></div>
+  <button onclick="generateReference()">Generate Reference</button>
+  <div id="finalOutput"></div>
+  <h3>Debug Metadata</h3>
+  <textarea id="debugOutput" rows="10"></textarea>
+  <script src="referenceEngine.js"></script>
+</body>
+</html>
